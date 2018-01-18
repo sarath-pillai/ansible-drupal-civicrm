@@ -3,6 +3,7 @@
   user:
     name: '{{ drupal_admin_system_user }}'
     createhome: yes
+    shell: /bin/bash
     home: '{{ doc_root_path }}'
 - name: Add public key to drupal admin user
   authorized_key:
