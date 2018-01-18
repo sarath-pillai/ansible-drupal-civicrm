@@ -1,2 +1,3 @@
 ---
-drupal_admin_system_user: drupaladmin
+drupal_admin_system_user: drupaladmin # The user using which drush and other drupal activities will be performed. This user will own the docroot and drupal installation
+doc_root_path: /usr/share/drupal

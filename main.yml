@@ -5,9 +5,9 @@
   roles:
     - common
     - user
-    - php
-    - drush
-    - nginx
-    - mysql
-    - drupal
-    - civicrm
+#    - php
+#    - drush
+#    - nginx
+#    - mysql
+#    - drupal
+#    - civicrm
