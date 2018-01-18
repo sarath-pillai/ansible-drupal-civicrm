@@ -5,8 +5,10 @@
   roles:
     - common
     - user
-#    - php
+    - php
+    - composer
 #    - drush
+#    - php
 #    - nginx
 #    - mysql
 #    - drupal
