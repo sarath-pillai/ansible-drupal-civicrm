@@ -1,0 +1,13 @@
+---
+- hosts: all
+  user: root
+
+  roles:
+    - common
+    - user
+    - php
+    - drush
+    - nginx
+    - mysql
+    - drupal
+    - civicrm
