@@ -4,3 +4,9 @@ doc_root_path: /usr/share/drupal # This is the home directory of the drupal admi
 drush_version: 'drush:7.*'
 mysql_server_version: 5.7
 mysql_root_pass: RoLLing5t0n3
+mysql_drupal_db_user: drupal
+mysql_drupal_db_pass: dru28347Pal
+mysql_drupal_db_name: drupal
+mysql_civicrm_db_name: civicrm
+mysql_civicrm_db_user: civicrm
+mysql_civicrm_db_pass: civi824IoCRM
