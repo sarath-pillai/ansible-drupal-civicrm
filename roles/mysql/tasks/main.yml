@@ -2,9 +2,35 @@
 - name: Set MySQL Password in debconf selections
   sudo: yes
   debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_root_pass | quote}}' vtype='password'
+
 - name: Set MySQL Password Confirmation
   debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{mysql_root_pass | quote}}' vtype='password'
+
 - name: Installing MySQL
   apt: package={{ item }} state=installed force=yes update_cache=yes
   with_items:
     - mysql-server-{{mysql_server_version}}
+###Secure MySQL Installation####
+- name: Package for Python MySQL
+  apt: pkg="python-mysqldb" state=present
+
+- name: root password for mysql
+  mysql_user: login_user=root login_password="{{ mysql_root_pass }}" user=root password="{{ mysql_root_pass }}"
+
+- name: Permit IPv6 localhost
+  mysql_user: login_user=root login_password="{{ mysql_root_pass }}" user=root password="{{ mysql_root_pass }}" host="::1"
+
+- name: Permit IPv4 localhost
+  mysql_user: login_user=root login_password="{{ mysql_root_pass }}" user=root password="{{ mysql_root_pass }}" host="127.0.0.1"
+
+- name: Permit Localhost name
+  mysql_user: login_user=root login_password="{{ mysql_root_pass }}" user=root password="{{ mysql_root_pass }}" host="localhost"
+
+- name: Permit system Host FQDN
+  mysql_user: login_user=root login_password="{{ mysql_root_pass }}" user=root password="{{ mysql_root_pass }}" host="{{ ansible_fqdn }}"
+
+- name: Delete Default users
+  mysql_user: login_user=root login_password="{{ mysql_root_pass }}" user="" host_all=yes state=absent
+
+- name: Delete Default database
+  mysql_db: login_user=root login_password="{{ mysql_root_pass }}" db=test state=absent
