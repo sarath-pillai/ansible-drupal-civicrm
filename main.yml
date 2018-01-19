@@ -8,7 +8,7 @@
     - php
     - composer
     - drush
-#    - php
+    - mysql
 #    - nginx
 #    - mysql
 #    - drupal
