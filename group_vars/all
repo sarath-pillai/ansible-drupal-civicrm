@@ -1,3 +1,4 @@
 ---
 drupal_admin_system_user: drupaladmin # The user using which drush and other drupal activities will be performed. This user will own the docroot and drupal installation
 doc_root_path: /usr/share/drupal # This is the home directory of the drupal admin user. This user will also have drush command added to PATH
+drush_version: 'drush:7.*'

@@ -7,7 +7,7 @@
     - user
     - php
     - composer
-#    - drush
+    - drush
 #    - php
 #    - nginx
 #    - mysql

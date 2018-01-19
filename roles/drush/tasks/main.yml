@@ -1,14 +1,10 @@
 ---
-- name: Create User for Drush & Drupal
-  user:
-    name: '{{ drupal_admin_system_user }}'
-    createhome: yes
-    shell: /bin/bash
-    home: '{{ doc_root_path }}'
-- name: Add public key to drupal admin user
-  authorized_key:
-    user: '{{ drupal_admin_system_user }}'
-    state: present
-    key: '{{ item }}'
-  with_file:
-    - public_keys/drupal_rsa.pub
+- name: "Get Drush With Composer"
+  shell: 'composer global require drush/"{{ drush_version }}" --no-interaction --no-ansi'
+  become: yes
+  become_user: "{{ drupal_admin_system_user }}"
+  tags: [drush]
+- name: Append Drush Path to Drupal Admin User's bashrc
+  become: yes
+  become_user: "{{ drupal_admin_system_user }}"
+  lineinfile: dest=~/.bashrc line='export PATH="$HOME/.composer/vendor/bin:$PATH"'
