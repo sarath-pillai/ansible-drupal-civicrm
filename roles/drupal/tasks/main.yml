@@ -1,0 +1,8 @@
+---
+- name: Download Drupal From Git
+  git:
+    repo: "https://github.com/drupal/drupal.git"
+    version: "{{ drupal_major_version }}"
+    dest: "{{ doc_root_path }}"
+  become: yes
+  become_user: "{{ drupal_admin_system_user }}"

@@ -9,7 +9,7 @@
     - composer
     - drush
     - mysql
+    - drupal
 #    - nginx
-#    - mysql
 #    - drupal
 #    - civicrm
