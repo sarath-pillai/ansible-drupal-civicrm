@@ -1,0 +1,14 @@
+---
+
+- name: install nginx package
+  apt: name={{ item }} state=latest
+  with_items:
+      - nginx
+
+- service: name=nginx state=started enabled=yes
+
+- name: copy nginx template file
+  template: src=templates/drupalcivicrm.conf.j2 dest=/etc/nginx/sites-enabled/drupalcivicrm.conf owner=root group=root mode=0644
+  notify:
+      - restart nginx
+

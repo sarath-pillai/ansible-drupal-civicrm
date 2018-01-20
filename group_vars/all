@@ -12,3 +12,4 @@ mysql_drupal_db_name: drupal
 mysql_civicrm_db_name: civicrm
 mysql_civicrm_db_user: civicrm
 mysql_civicrm_db_pass: civi824IoCRM
+drupal_site_name: drupalcivicrm.example.com
