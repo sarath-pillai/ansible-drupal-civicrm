@@ -41,3 +41,9 @@
   become_user: "{{ drupal_admin_system_user }}"
   args:
     chdir: "{{ doc_root_path }}"
+
+- name: ensure files directory permission
+  file:
+     path: "{{ doc_root_path }}sites/default/files"
+     state: directory
+     mode: 0777
