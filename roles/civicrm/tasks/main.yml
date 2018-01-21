@@ -1,0 +1,43 @@
+---
+
+- name: Verify if civicrm module is present
+  stat: path="{{ doc_root_path }}sites/all/modules/civicrm"
+  register: crm
+
+- name: Download Latest Civicrm Drupal Plugin
+  unarchive:
+     src: "https://download.civicrm.org/civicrm-{{ civicrm_version }}-drupal.tar.gz"
+     dest: "/tmp/"
+     remote_src: yes
+  when: crm.stat.exists == false
+
+- name: Copy civicrm drush INC
+  copy:
+     src: "/tmp/civicrm/drupal/drush/civicrm.drush.inc"
+     dest: "{{ doc_root_path }}sites/all/drush/"
+     owner: "{{ drupal_admin_system_user }}"
+     group: "{{ drupal_admin_system_user }}"
+  when: crm.stat.exists == false
+  notify:
+     - Run Drush Cache Clear 
+
+- name: ensure user has rights for defaults directory
+  file:
+     path: "{{ doc_root_path }}sites/default"
+     state: directory
+     mode: 0755
+
+- name: Install CiviCrm
+  shell: >
+    /usr/share/drupal/.composer/vendor/bin/drush civicrm-install
+    --dbuser="{{ mysql_civicrm_db_user }}"
+    --dbpass="{{ mysql_civicrm_db_pass }}"
+    --dbname="{{ mysql_civicrm_db_name }}"
+    --dbhost="{{ db_host_address }}"
+    --tarfile="/tmp/civicrm-{{ civicrm_version }}-drupal.tar.gz"
+    --destination=sites/all/modules
+  when: crm.stat.exists == false
+  become: yes
+  become_user: "{{ drupal_admin_system_user }}"
+  args:
+    chdir: "{{ doc_root_path }}"

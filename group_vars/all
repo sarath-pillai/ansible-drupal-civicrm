@@ -16,3 +16,4 @@ drupal_site_name: drupalcivicrm.example.com
 db_host_address: localhost
 drupal_admin_user: admin
 drupal_admin_password: asjh234IusKS23
+civicrm_version: 4.7.29 
