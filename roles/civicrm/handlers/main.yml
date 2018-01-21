@@ -5,3 +5,6 @@
     "{{ drupal_admin_home }}/.composer/vendor/bin/drush cache-clear drush"
   become: yes
   become_user: "{{ drupal_admin_system_user }}"
+
+- name: delete civicrm_install_canary table
+  command: mysql -e 'DROP TABLE {{ mysql_civicrm_db_name }}.civicrm_install_canary;'

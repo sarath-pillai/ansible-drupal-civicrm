@@ -41,6 +41,7 @@
   become_user: "{{ drupal_admin_system_user }}"
   args:
     chdir: "{{ doc_root_path }}"
+  notify: delete civicrm_install_canary table
 
 - name: ensure files directory permission
   file:
