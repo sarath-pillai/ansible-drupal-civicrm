@@ -1,0 +1,10 @@
+---
+- name: "Get Drush With Composer"
+  shell: 'composer global require drush/"{{ drush_version }}" --no-interaction --no-ansi'
+  become: yes
+  become_user: "{{ drupal_admin_system_user }}"
+  tags: [drush]
+- name: Append Drush Path to Drupal Admin User's bashrc
+  become: yes
+  become_user: "{{ drupal_admin_system_user }}"
+  lineinfile: dest=~/.bashrc line='export PATH="$HOME/.composer/vendor/bin:$PATH"'

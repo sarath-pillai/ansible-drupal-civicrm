@@ -1,0 +1,14 @@
+---
+- name: Create User for Drush & Drupal
+  user:
+    name: '{{ drupal_admin_system_user }}'
+    createhome: yes
+    shell: /bin/bash
+    home: '{{ drupal_admin_home }}'
+- name: Add public key to drupal admin user
+  authorized_key:
+    user: '{{ drupal_admin_system_user }}'
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/drupal_rsa.pub

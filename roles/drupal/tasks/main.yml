@@ -1,0 +1,29 @@
+---
+- name: Download Drupal From Git
+  git:
+    repo: "https://github.com/drupal/drupal.git"
+    version: "{{ drupal_major_version }}"
+    dest: "{{ doc_root_path }}"
+  become: yes
+  become_user: "{{ drupal_admin_system_user }}"
+
+- name: Drupal Status
+  become: true
+  become_user: "{{ drupal_admin_system_user }}"
+  shell: >
+    /usr/share/drupal/.composer/vendor/bin/drush status --root="{{ doc_root_path }}"
+  register: drush_status
+
+- name: Install Drupal
+  shell: >
+    /usr/share/drupal/.composer/vendor/bin/drush site-install standard -y
+    --site-name="{{ drupal_site_name }}"
+    --account-name="{{ drupal_admin_user }}"
+    --account-pass="{{ drupal_admin_password }}"
+    --db-url=mysql://"{{ mysql_drupal_db_user }}":"{{ mysql_drupal_db_pass }}"@"{{ db_host_address }}"/"{{ mysql_drupal_db_name }}"
+    -r "{{ doc_root_path }}"
+    --clean-url=0
+  when: not drush_status.stdout | search("Drupal bootstrap\s+:\s+Successful")
+  notify: "restart nginx"
+  become: yes
+  become_user: "{{ drupal_admin_system_user }}"

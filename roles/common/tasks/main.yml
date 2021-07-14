@@ -1,0 +1,5 @@
+---
+- name: Run apt-get Cache Update
+  sudo: yes
+  apt: update-cache=yes
+  tags: common
